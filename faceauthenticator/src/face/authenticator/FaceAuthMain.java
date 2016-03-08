@@ -28,6 +28,7 @@ public class FaceAuthMain {
 		System.out.println("mat = " + mat.dump());
 
 		captureImage();
+		System.out.println("First change !");
 		
 	}
 
