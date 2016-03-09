@@ -20,7 +20,7 @@ public class FaceAuthData {
 	
 	public FaceAuthImage getImage()
 	{
-		return new FaceAuthImage();
+		return null;
 	}
 	
 	
