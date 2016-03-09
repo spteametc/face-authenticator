@@ -72,7 +72,8 @@ public class FaceAuthMain {
 		}
 		
 		System.out.println("Captured Frame Width " + frame.width());  
-
+		System.out.println("Test 1 Timo");
+		System.out.println("Test 2 Timo");
 	}
 
 
