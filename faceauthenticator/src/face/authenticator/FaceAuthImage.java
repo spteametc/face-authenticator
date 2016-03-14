@@ -13,6 +13,7 @@ public class FaceAuthImage{
 
 
 	private IplImage iplImg;
+	
 	public FaceAuthImage(Object img)
 	{
 		if(img instanceof IplImage)

@@ -9,31 +9,32 @@ import static org.bytedeco.javacpp.opencv_core.*;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 import org.bytedeco.javacv.OpenCVFrameGrabber;
 
-
-
-
 public class FaceAuthMain {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-	
+		// TODO Auto-generated method stub	
 		try {
 			OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
 			grabber.start();
 			IplImage image = grabber.getDelayedImage();
-
+			
 			FaceAuthData db = new FaceAuthData();
 			db.init();
 
 			FaceAuthGUI gui = FaceAuthGUI.getInstance();
 			gui.init();
-
+			
+			FaceAuthImageRegister register = new FaceAuthImageRegister(10, "cascadetrainer/samples/timo/");
+			
+			//FaceAuthFaceRecognizer recognizer = new FaceAuthFaceRecognizer();
+			//recognizer.learn("cascadetrainer/samples/samples.txt");
+			
 			while(true){		
 				image=grabber.grab();
-				image = FaceAuthDetector.detect(image);
+				image = FaceAuthDetector.detect(image);				
 				FaceAuthImage imageObj = new FaceAuthImage(image);				
 				gui.setImage(imageObj);
+				register.writeImg(gui.getImage());
 				gui.open();
 			}			
 			//gui.close();						
@@ -48,8 +49,4 @@ public class FaceAuthMain {
 			e.printStackTrace();
 		}
 	}
-	
-	
-		
-
 }

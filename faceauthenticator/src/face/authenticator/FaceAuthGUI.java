@@ -55,6 +55,12 @@ public class FaceAuthGUI implements PaintListener{
 	{
 		image = img.getImageData();
 	}
+	
+	public Image getImage()
+	{		
+		return image;
+	}
+	
 
 	private void update()
 	{	

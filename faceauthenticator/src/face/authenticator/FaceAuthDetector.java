@@ -18,6 +18,16 @@ import org.bytedeco.javacpp.opencv_objdetect.CvHaarClassifierCascade;
 public class FaceAuthDetector {
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static IplImage detect(IplImage src){
 
 		final String XML_FILE = 
