@@ -50,7 +50,7 @@ public class faceAuthGUI extends javax.swing.JFrame {
             jProgressBar1.setIndeterminate(true);
             jLabel1.setText("Capturing samples and saving them...");
 
-            while (counter < 10) {
+            while (counter < 20) {
                 try {
                     //thread to sleep for the specified number of milliseconds
                     Thread.sleep(1000);
@@ -73,7 +73,7 @@ public class faceAuthGUI extends javax.swing.JFrame {
                 FileWriter fileWriter = new FileWriter("database/input.txt", true);
                 BufferedWriter writer = new BufferedWriter(fileWriter);
                 StringBuilder b = new StringBuilder();
-                for (int i = 1; i <= 10; i++) {
+                for (int i = 1; i <= 20; i++) {
                     b.append(nrOfPersons + " ");
                     b.append(name + " ");
                     b.append("database/samples/s" + nrOfPersons + "/" + i + ".png\n");
@@ -230,11 +230,11 @@ public class faceAuthGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(mainSaveButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(mainAuthButton)
                 .addGap(100, 100, 100)
                 .addComponent(mainMatchButton)
@@ -305,7 +305,8 @@ public class faceAuthGUI extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         FaceAuthRecognizer faceRecognition = new FaceAuthRecognizer();
-        name = faceRecognition.recognizeFileList("./database/output.txt");
+        name = faceRecognition.recognizeFileList("./database/output.txt", null);
+        
         if(name == null)
         {
             //no match found
@@ -318,6 +319,42 @@ public class faceAuthGUI extends javax.swing.JFrame {
 
     private void mainMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMatchButtonActionPerformed
         // TODO add your handling code here:
+        IplImage img = new IplImage();
+        String personName = null, name = null;
+        
+        img = FaceAuthDetector.getFace();
+        img = FaceAuthDetector.processImage(img, 92, 112);
+        
+        cvSaveImage("./database/samples/toTest.png", img);
+        
+        personName = JOptionPane.showInputDialog(null,
+                    "Please enter the name of the person you want to match with...","Confirm Dialog", JOptionPane.OK_CANCEL_OPTION);
+            if(personName == null || personName.isEmpty())
+            {
+                return;
+            }
+        try {
+                FileWriter fileWriter = new FileWriter("database/output.txt", false);
+                BufferedWriter writer = new BufferedWriter(fileWriter);
+                writer.append("0 x ./database/samples/toTest.png");
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        FaceAuthRecognizer faceRecognition = new FaceAuthRecognizer();
+        name = faceRecognition.recognizeFileList("./database/output.txt", personName);
+        
+        System.out.print("Name to match with:" + personName + "\n Name found: " + name + "\n");
+        
+        if(name == null || !name.equals(personName))
+        {
+            //no match found
+            JOptionPane.showMessageDialog(null, "Sorry, you don't match with: " + personName);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "It's a match!");
+        }
+        
     }//GEN-LAST:event_mainMatchButtonActionPerformed
     
     

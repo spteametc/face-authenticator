@@ -25,6 +25,9 @@ import static org.bytedeco.javacpp.opencv_imgproc.cvEqualizeHist;
 import static org.bytedeco.javacpp.opencv_imgproc.cvResize;
 import org.bytedeco.javacpp.opencv_objdetect.CvHaarClassifierCascade;
 
+import static org.bytedeco.javacpp.opencv_core.*;
+import static org.bytedeco.javacpp.opencv_imgproc.*;
+
 
 public class FaceAuthDetector {
     
